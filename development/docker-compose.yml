@@ -1,0 +1,30 @@
+---
+version: "3.8"
+
+services:
+  db:
+    image: "postgres:13-alpine"
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data"
+    healthcheck:
+      test: "pg_isready --username=nautobot --dbname=nautobot"
+      interval: "10s"
+      timeout: "5s"
+      retries: 10
+    ports:
+      - "5432:5432"
+    #command: ["postgres", "-c", "log_statement=all"]
+    environment:
+      POSTGRES_USER: nautobot
+      POSTGRES_DB: nautobot
+      POSTGRES_PASSWORD: nautobot
+  redis:
+    image: "redis:6-alpine"
+    command:
+      - "sh"
+      - "-c"
+      - "redis-server --appendonly yes"
+    ports:
+      - "6379:6379"
+volumes:
+  postgres_data: {}
