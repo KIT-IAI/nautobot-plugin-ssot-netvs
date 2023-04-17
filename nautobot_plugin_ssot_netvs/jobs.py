@@ -27,9 +27,9 @@ class NetvsDataSource(DataSource, Job):
         return {}
 
     @classmethod
-    def data_mappings(cls) -> Iterable[DataMapping]:
+    def data_mappings(cls) -> Iterable:
         return (
-            DataMapping("Subnet (remote)", None, "Prefix (local)", reverse("ipam:prefix_list"))
+         DataMapping("Subnet (remote)", None, "Prefix (local)", reverse("ipam:prefix_list")),
         )
 
     def load_source_adapter(self):
@@ -47,4 +47,4 @@ class NetvsDataSource(DataSource, Job):
             self.log_warning(message="Not both adapters were properly initialized.")
 
 
-jobs = [NetvsDataSource]
+jobs = [NetvsDataSource, ]

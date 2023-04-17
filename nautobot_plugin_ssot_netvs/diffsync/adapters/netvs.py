@@ -3,6 +3,7 @@ import os
 import netdb_client.api32
 import netdb_client.api32.nd
 from diffsync import DiffSync
+from django.conf import settings
 
 from nautobot_plugin_ssot_netvs.diffsync.models.netvs import NetvsSubnet
 
@@ -15,10 +16,11 @@ class NetVSAdapter(DiffSync):
 
     def __init__(self, *args, job=None, sync=None, **kwargs):
         super().__init__(*args, **kwargs)
+        PLUGIN_SETTINGS = settings.PLUGINS_CONFIG["nautobot_plugin_ssot_netvs"]
         self.job = job
         self.sync = sync
-        self.base_url = os.environ.get("NETVS_BASE_URL")
-        self.token = os.environ.get("NETVS_TOKEN")
+        self.base_url = PLUGIN_SETTINGS.get("netvs_base_url")
+        self.token = PLUGIN_SETTINGS.get("netvs_token")
 
     def load(self):
         endpoint = netdb_client.api32.APIEndpoint(base_url=self.base_url, token=self.token)
