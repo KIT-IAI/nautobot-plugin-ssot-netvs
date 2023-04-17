@@ -1,6 +1,6 @@
 ---
 version: "3.8"
-
+name: "ssot-netvs"
 services:
   db:
     image: "postgres:13-alpine"
